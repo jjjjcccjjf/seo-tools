@@ -22,4 +22,9 @@ class Dashboard extends Admin_core_controller {
     $data['res'] = $res;
     $this->wrapper('cms/index', $data);
   }
+
+  public function link_builder_tool()
+  {
+   $this->wrapper('cms/link-builder-tool'); 
+  }
 }
