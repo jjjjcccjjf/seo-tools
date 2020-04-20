@@ -17,7 +17,7 @@ class Admin_core_controller extends CI_Controller
 
   public function wrapper($body, $data = null)
   {
-    if ($this->session->role !== 'administrator') {
+    if (!$this->session->role) {
       redirect('cms/login');
     }
 
@@ -29,7 +29,7 @@ class Admin_core_controller extends CI_Controller
 
   public function admin_redirect($param = null)
   {
-    if ($this->session->role !== 'administrator') {
+    if (!$this->session->role) {
       redirect('cms/login');
     } else {
       redirect($param);

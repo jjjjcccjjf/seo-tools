@@ -69,7 +69,7 @@ class Admin_core_model extends CI_model {
     $upload_path = $this->upload_dir;
 
     $config['upload_path'] = $upload_path; # NOTE: Change your directory as needed
-    $config['allowed_types'] = 'jpg|jpeg|png'; # NOTE: Change file types as needed
+    $config['allowed_types'] = 'jpg|jpeg|png|gif|csv'; # NOTE: Change file types as needed
     $config['file_name'] = time() . '_' . $file['name']; # Set the new filename
     $this->upload->initialize($config);
 

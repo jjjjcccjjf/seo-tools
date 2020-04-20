@@ -12,7 +12,7 @@
       <ul class="nav pull-right top-menu">
         <li class="dropdown">
           <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-            <img alt="" src="<?php echo base_url('public/admin/') ?>img/avatar1_small.jpg">
+            <img alt="" style="max-height:25px" onerror="this.src='<?php echo base_url('public/admin/img/account.png') ?>'" src="<?php echo $this->session->userdata('profile_pic'); ?>">
             <span class="username">Welcome back, <?php echo $this->session->userdata('name'); ?></span>
             <b class="caret"></b>
           </a>
@@ -39,9 +39,16 @@
         </li>
         <li>
           <a href="<?php echo base_url('cms/users') ?>"
-            class="<?php echo $this->uri->segment(1) === 'cms' && ($this->uri->segment(2) === null || $this->uri->segment(2) === 'users') ? 'active': ''; ?>">
+            class="<?php echo $this->uri->segment(1) === 'cms' && $this->uri->segment(2) === 'users' ? 'active': ''; ?>">
             <i class="fa fa-users"></i>
             <span>Users Management</span>
+          </a>
+        </li>
+        <li>
+          <a href="<?php echo base_url('cms/link_builds') ?>"
+            class="<?php echo $this->uri->segment(2) === 'link_builds' ? 'active': ''; ?>">
+            <i class="fa fa-link"></i>
+            <span>My Link Builds</span>
           </a>
         </li>
         <li>

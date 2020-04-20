@@ -7,9 +7,11 @@ class Admin extends Admin_core_controller { # see application/core/MY_Controller
     $this->load->model('cms/admin_model','admin_model');
   }
  
-  public function update($id)
+   public function update($id)
   {
-    if($this->admin_model->update($id, $this->input->post())){
+    $data = array_merge($this->input->post(), $this->admin_model->upload('profile_pic'));
+
+    if($this->admin_model->update($id, $data)){
       $this->session->set_flashdata('flash_msg', ['message' => 'Item updated successfully', 'color' => 'green']);
     } else {
       $this->session->set_flashdata('flash_msg', ['message' => 'Error updating item', 'color' => 'red']);
@@ -18,6 +20,8 @@ class Admin extends Admin_core_controller { # see application/core/MY_Controller
   }
   public function add()
   {
+    $data = array_merge($this->input->post(), $this->admin_model->upload('profile_pic'));
+
     if($this->admin_model->add($this->input->post())){
       $this->session->set_flashdata('flash_msg', ['message' => 'Item added successfully', 'color' => 'green']);
     } else {

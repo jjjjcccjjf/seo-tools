@@ -79,25 +79,9 @@
   </section>
 </section>
 
-<footer class="site-footer" style="position: fixed;
-  left: 0;
-  bottom: 0; width:100%">
-    <div class="text-center">
-    	<div class="pull-left" style="margin-left:15px">pagination</div>
-    	<div class="pull-right" style="margin-right:15px">
-    		<button class="btn btn-md btn-success">Upload Links</button>
-    		<button class="btn btn-md btn-success">Export Report</button>
-    	</div>
-        <!-- <a href="#" class="go-top">
-            <i class="fa fa-angle-up"></i>
-        </a> -->
-    </div>
-</footer>
-<!--main content end-->
-
-
 <script>
-	$(document).ready(function() {
-		$('.sidebar-toggle-box').click();
-	});
+  $(document).ready(function($) {
+    $('.sidebar-toggle-box').click();
+  });
 </script>
+<?php $this->load->view('cms/footer_importer') ?>

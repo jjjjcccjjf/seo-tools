@@ -35,7 +35,7 @@ class Login extends Admin_core_controller {
 
     $res = $this->login->getByEmail($email);
     if($res && password_verify($password, $res->password)){
-      $this->session->set_userdata(['role' => 'administrator', 'id' => $res->id, 'name' => $res->name]);
+      $this->session->set_userdata(['role' => 'administrator', 'id' => $res->id, 'name' => $res->name, 'profile_pic' => base_url(). 'uploads/admin/' . $res->profile_pic]);
       redirect('cms/dashboard');
     } else {
       $this->session->set_flashdata('login_msg', ['message' => 'Incorrect email or password', 'color' => 'red']);
@@ -50,8 +50,9 @@ class Login extends Admin_core_controller {
     $password = $this->input->post('password');
 
     $res = $this->login_lb->getByEmail($email);
+
     if($res && password_verify($password, $res->password)){
-      $this->session->set_userdata(['role' => 'link_builder', 'id' => $res->id, 'name' => $res->name]);
+      $this->session->set_userdata(['role' => 'link_builder', 'id' => $res->id, 'name' => $res->name, 'profile_pic' => base_url(). 'uploads/users/' . $res->profile_pic]);
       redirect('cms/dashboard');
     } else {
       $this->session->set_flashdata('login_msg_lb', ['message' => 'Incorrect email or password', 'color' => 'red']);

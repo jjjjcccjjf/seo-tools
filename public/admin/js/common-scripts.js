@@ -85,7 +85,11 @@ var Script = function () {
             $("#container").removeClass("sidebar-closed");
         }
         var owl = $("#owl-demo").data("owlCarousel");
-        owl.reinit();
+        try{
+            owl.reinit();
+        } catch(e){
+            console.log(e.message)
+        }
     });
 
 // custom scrollbar

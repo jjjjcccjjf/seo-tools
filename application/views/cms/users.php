@@ -34,7 +34,7 @@
                         <td><?php echo $value->email ?></td>
                         <td>
                           <button type="button"
-                          data-payload='<?php echo json_encode(['id' => $value->id, 'name' => $value->name, 'email' => $value->email])?>'
+                          data-payload='<?php echo json_encode(['id' => $value->id, 'name' => $value->name, 'email' => $value->email, 'profile_pic' => $value->profile_pic])?>'
                           class="edit-row btn btn-info btn-xs">Edit</button>
                           <button type="button" data-id='<?php echo $value->id; ?>'
                             class="btn btn-delete btn-danger btn-xs">Delete</button>
@@ -69,7 +69,7 @@
         </div>
         <div class="modal-body">
 
-          <form role="form" method="post">
+          <form role="form" method="post" enctype="multipart/form-data">
             <div class="form-group">
               <label >Name</label>
               <input type="text" class="form-control" name="name" placeholder="Name">
@@ -86,6 +86,10 @@
               <label >Confirm Password</label>
               <input type="password" class="form-control" id="confirm_password" placeholder="Confirm New Password">
             </div>
+            
+            <label >Profile picture</label> 
+            <div><img src="" id="profile_pic_modal_image" style="max-width:100px" onerror="this.src='<?php echo base_url('public/admin/img/account.png') ?>'"></div><br>
+            <input type="file" class="form-control" name="profile_pic">
 
           </div>
           <div class="modal-footer">

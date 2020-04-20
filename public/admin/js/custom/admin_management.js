@@ -13,6 +13,9 @@ $(document).ready(function() {
       $('input[name=name]').val(payload.name)
       $('input[name=email]').val(payload.email)
       $('form').attr('action', base_url + 'cms/admin/update/' + payload.id)
+
+      $('#profile_pic_modal_image').attr('src', payload.profile_pic)
+      
       $('.modal').modal()
     })
   
