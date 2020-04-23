@@ -17,7 +17,7 @@ $(document).ready(function() {
       $('input[name=keywords]').val(payload.keywords)
       $('textarea[name=notes]').val(payload.notes)
 
-      $('form').attr('action', base_url + 'cms/link_builds/update')
+      $('form').attr('action', base_url + 'cms/link_builds/update/' + $(this).data('id'))
       $('.modal').modal()
     })
   

@@ -18,7 +18,7 @@ class Link_builds extends Admin_core_controller { # see application/core/MY_Cont
   public function update($id)
   {
     $data = $this->input->post();
-
+    // var_dump( $id, $data); die();
     if($this->link_builds_model->update($id, $data)){
       $this->session->set_flashdata('flash_msg', ['message' => 'Item updated successfully', 'color' => 'green']);
     } else {
@@ -42,6 +42,13 @@ class Link_builds extends Admin_core_controller { # see application/core/MY_Cont
     } else {
       $this->session->set_flashdata('flash_msg', ['message' => 'Error deleting item', 'color' => 'red']);
     }
+    redirect('cms/link_builds');
+  }
+
+  function recheck($user_id)
+  {
+    $this->link_builds_model->recheckLinks($user_id);
+    $this->session->set_flashdata('flash_msg', ['message' => 'Links rechecked', 'color' => 'green']);
     redirect('cms/link_builds');
   }
 

@@ -10,6 +10,8 @@ class Link_builds_model extends Admin_core_model
     $this->table = 'link_builds'; # Replace these properties on children
     $this->upload_dir = 'uploads/link_builds/'; # Replace these properties on children
     $this->per_page = 15;
+
+    $this->load->model('api/scripts_model');
   }
 
 

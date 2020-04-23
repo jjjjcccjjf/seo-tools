@@ -30,6 +30,7 @@
     <div id="sidebar"  class="nav-collapse ">
       <!-- sidebar menu start-->
       <ul class="sidebar-menu" id="nav-accordion">
+        <?php if ($this->session->role == 'administrator'): ?>
         <li>
           <a href="<?php echo base_url('cms') ?>"
             class="<?php echo $this->uri->segment(1) === 'cms' && ($this->uri->segment(2) === null || $this->uri->segment(2) === 'dashboard') ? 'active': ''; ?>">
@@ -44,6 +45,10 @@
             <span>Users Management</span>
           </a>
         </li>
+
+        <?php endif ?>
+
+        <?php if (  $this->session->role == 'link_builder'): ?>
         <li>
           <a href="<?php echo base_url('cms/link_builds') ?>"
             class="<?php echo $this->uri->segment(2) === 'link_builds' ? 'active': ''; ?>">
@@ -51,6 +56,7 @@
             <span>My Link Builds</span>
           </a>
         </li>
+        <?php endif ?>
         <li>
           <a href="<?php echo base_url('cms/link-builder-tool') ?>"
             class="<?php echo $this->uri->segment(2) === 'link-builder-tool' ? 'active': ''; ?>">

@@ -39,6 +39,7 @@ class Scripts_model extends CI_model
   function auditHtml($html, $link_to_be_verified)
   {
   	$DOM = new DOMDocument();
+	// var_dump($DOM, $link_to_be_verified); die();
 	//load the html string into the DOMDocument
 	@$DOM->loadHTML($html);
 	//get a list of all <A> tags
@@ -48,20 +49,19 @@ class Scripts_model extends CI_model
 	//loop through all <A> tags
 	foreach($a as $link){
 	    //echo out the href attribute of the <A> tag.
-	    $links[] = $link->getAttribute('href');
+	    $links[] = rtrim($link->getAttribute('href'), '/');
 	}
-
 	return $this->delegateLink($links, $link_to_be_verified);
   }
 
   function delegateLink($links, $link_to_be_verified)
   {
-  	if (in_array($link_to_be_verified, $links)) {
+  	if (in_array(rtrim($link_to_be_verified, '/'), $links)) {
   		return 'success';
   	}
 
   	if (!in_array($link_to_be_verified, $links)) {
-  		return 'fail';
+  		return 'failed';
   	}
   }
 

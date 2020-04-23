@@ -8,12 +8,12 @@ class Scripts extends \Restserver\Libraries\REST_Controller
     parent::__construct();
 
     $this->load->model('api/scripts_model');
+    $this->load->model('cms/link_builds_model');
   }
 
   function verify_post()
   {
 	$url = $this->input->post('url');
-
 
 	# make sure URL is valid, syntax-wise
 	$is_valid_url = $this->scripts_model->isValidUrl($url);
@@ -41,6 +41,25 @@ class Scripts extends \Restserver\Libraries\REST_Controller
 		break;
 	}
 
+  }
+
+  function check_user_links_post($user_id, $options = '')
+  {
+  	if ($options == 'unchecked_only') {
+  		$this->db->where('(status IS NULL OR status = "") AND verified_at is NULL');
+  	} else if ($options == 'failed_only'){
+  		$this->db->where('status', 'failed');
+  	}
+  	$links = $this->link_builds_model->allRes($user_id);
+  	
+    foreach ($links as $key => $value) {
+      $auditRes = $this->scripts_model->auditHtml($this->scripts_model->getPageObj($value->webpage_link)->html, $value->landing_page_link);
+      $this->db->where('id', $value->id);
+      $this->db->update('link_builds', ['status' => $auditRes, 'verified_at' => date('Y-m-d H:i:s')]);
+    }
+
+    $this->session->set_flashdata('flash_msg', ['message' => 'Links rechecked', 'color' => 'green']);
+    $this->response(['code' => 'success', 'message' => 'Success'], 200);
   }
 
 }

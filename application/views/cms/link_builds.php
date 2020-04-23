@@ -12,6 +12,18 @@
     width:30px;
     margin:0px 3px 0px 3px;
   }
+  .hidy2 {
+    height:15px;
+    width:15px; 
+    display:none;
+  }
+  .hidy3{
+    display:none;
+  }
+  ._mess{
+    margin-top:15px;
+    display:none;
+  }
 </style>
 
 <section id="main-content">
@@ -26,14 +38,31 @@
             Legend:
              <button class="legend-btn btn btn-xs btn-success"></button> Success  
              <button class="legend-btn btn btn-xs btn-danger"></button> Failed
-             <button class="legend-btn btn btn-xs btn-warning"></button> Pending  
+             <button class="legend-btn btn btn-xs btn-warning"></button> Unchecked  
             <?php if ($flash_msg = $this->session->flash_msg): ?>
               <br><sub style="color: <?php echo $flash_msg['color'] ?>"><?php echo $flash_msg['message'] ?></sub>
             <?php endif; ?>
+               <p class="_mess" style="font-weight: 400">Please wait until the background task is finished and please <span style="font-weight: bold">DO NOT</span> try to modify any of your links while the system is checking.</p>
           </header>
           <div class="panel-body">
             <p>
-              <button type="button" class="add-btn btn btn-success btn-sm">Add new</button>
+              <button type="button" class="add-btn btn btn-success btn-sm">Add new</button> 
+              <button type="button" id="check_my_links" class="btn btn-info btn-sm" data-user_id='<?php echo $this->session->id ?>'>
+                <i class="fa fa-refresh hidy"></i> 
+                <img class="hidy2" src="<?php echo base_url('public/admin/img/gear-loader.gif')?>" >
+                <span class="hidy">Recheck links</span>
+                <span class="hidy2">Checking...</span>
+                <span class="hidy3">Redirecting...</span>
+               </button> 
+             <button class="btn btn-info btn-sm">
+                  
+                  <label style="margin:0px"> 
+                    Unchecked only &nbsp;<input style="margin:0px" type="radio" name="checky" value="unchecked_only"> 
+                  </label> &nbsp;
+                  <label style="margin:0px"> 
+                    Failed only &nbsp;<input style="margin:0px" type="radio" name="checky" value="failed_only"> 
+                  </label>
+              </button>
             </p>
             <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="1">
               <table class="table table-bordered">
@@ -54,13 +83,14 @@
                       <tr class="<?php echo $value->status ?>">
                         <th scope="row"><?php echo $i++ ?></th>
                         <td><?php echo $value->account_name ?></td>
-                        <td><a href="<?php echo $value->webpage_link ?>"><?php echo $value->webpage_link ?></a></td>
-                        <td><a href="<?php echo $value->landing_page_link ?>"><?php echo $value->landing_page_link ?></a></td>
+                        <td><a target="_blank" href="<?php echo $value->webpage_link ?>"><?php echo $value->webpage_link ?></a></td>
+                        <td><a target="_blank" href="<?php echo $value->landing_page_link ?>"><?php echo $value->landing_page_link ?></a></td>
                         <td><?php echo $value->keywords ?></td>
                         <td>
-                          <button type="button"
+                          <button data-id='<?php echo $value->id; ?>' type="button"
                           data-payload='<?php echo json_encode(['id' => $value->id, 'account_name' => $value->account_name, 'webpage_link' => $value->webpage_link, 'landing_page_link' => $value->landing_page_link, 'keywords' => $value->keywords, 'notes' => $value->notes], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE)?>'
-                          class="edit-row btn btn-info btn-xs">Edit</button> <button type="button" data-id='<?php echo $value->id; ?>' class="btn btn-delete btn-danger btn-xs">Delete</button> <button class="btn btn-info btn-xs" style="border-radius: 500px;margin-top:7px">&nbsp;<i class="fa fa-info" title="<?php echo ucwords($value->status) ?>">&nbsp;</i></button>
+                          class="edit-row btn btn-info btn-xs"><i class="fa fa-pencil"></i></button> 
+                          <button type="button" data-id='<?php echo $value->id; ?>' class="btn btn-delete btn-danger btn-xs"><i class="fa fa-trash-o"></i></button> <button class="btn btn-info btn-xs" style="border-radius: 500px;margin-top:7px">&nbsp;<i class="fa fa-info" title="<?php echo ucwords($value->status) ?>">&nbsp;</i></button>
                           </td>
                         </tr>
                       <?php endforeach; ?>
@@ -131,5 +161,7 @@
 <?php $this->load->view('cms/footer_importer') ?>
 <!--main content end-->
 
+
+  <script src="<?php echo base_url('public/admin/js/custom/') ?>link_checking_management.js"></script>
   <script src="<?php echo base_url('public/admin/js/custom/') ?>link_builds_management.js"></script>
   <script src="<?php echo base_url('public/admin/js/custom/') ?>generic.js"></script>
