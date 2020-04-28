@@ -82,6 +82,7 @@
 <script>
   $(document).ready(function($) {
     $('.sidebar-toggle-box').click();
+    $('.sidebar-toggle-box').click();
   });
 </script>
 <?php $this->load->view('cms/footer_importer') ?>

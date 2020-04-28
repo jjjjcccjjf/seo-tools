@@ -24,6 +24,9 @@
     margin-top:15px;
     display:none;
   }
+  td {
+    white-space: nowrap;
+  }
 </style>
 
 <section id="main-content">
@@ -38,11 +41,51 @@
             Legend:
              <button class="legend-btn btn btn-xs btn-success"></button> Success  
              <button class="legend-btn btn btn-xs btn-danger"></button> Failed
-             <button class="legend-btn btn btn-xs btn-warning"></button> Unchecked  
+             <button class="legend-btn btn btn-xs btn-warning"></button> Unchecked / Needs rechecking
             <?php if ($flash_msg = $this->session->flash_msg): ?>
               <br><sub style="color: <?php echo $flash_msg['color'] ?>"><?php echo $flash_msg['message'] ?></sub>
+              <?php if (isset($flash_msg['records_added'])): ?>
+                <br><sub style="color: green">Records added: <?php echo $flash_msg['records_added'] ?></sub> &nbsp; <sub style="color: red">Records rejected: <?php echo $flash_msg['records_rejected'] ?></sub>
+              <?php endif ?>
             <?php endif; ?>
-               <p class="_mess" style="font-weight: 400">Please wait until the background task is finished and please <span style="font-weight: bold">DO NOT</span> try to modify any of your links while the system is checking.</p>
+            
+               <p class="_mess" style="font-weight: 400">Please wait until the background task is finished and please <span style="font-weight: bold">DO NOT</span> try to modify any of your links while the system is checking. This may take a while.</p>
+             <!--carousel start-->
+
+              <section class="row">
+                  <div id="c-slide" class="carousel slide auto panel-body col-md-7">
+                      <ol class="carousel-indicators out">
+                          <li class="active" data-slide-to="0" data-target="#c-slide"></li>
+                          <!-- <li class="" data-slide-to="1" data-target="#c-slide"></li> -->
+                          <!-- <li class="" data-slide-to="2" data-target="#c-slide"></li> -->
+                      </ol>
+                      <div class="carousel-inner">
+                          <div class="item text-center active">
+                              <h3><?php echo date('F Y') ?></h3>
+                              <small class="text-muted">
+                                <span style='color:green'>Successful links: <?php echo @$status_count['success'] ?></span> — 
+                                <span style='color:red'>Failed: <?php echo @$status_count['failed'] ?></span> — 
+                                <span style='color:#f1c500'>Failed: <?php echo @$status_count['pending'] ?></span> 
+                              </small>
+                          </div>
+                          <!-- <div class="item text-center">
+                              <h3>Massive UI Elements</h3>
+                              <small class="text-muted">Fully Responsive</small>
+                          </div>
+                          <div class="item text-center">
+                              <h3>Well Documentation</h3>
+                              <small class="text-muted">Easy to Use</small>
+                          </div> -->
+                      </div>
+                      <a data-slide="prev" href="#c-slide" class="left carousel-control">
+                          <i class="fa fa-angle-left"></i>
+                      </a>
+                      <a data-slide="next" href="#c-slide" class="right carousel-control">
+                          <i class="fa fa-angle-right"></i>
+                      </a>
+                  </div>
+              </section>
+              <!--carousel end-->
           </header>
           <div class="panel-body">
             <p>
@@ -56,6 +99,9 @@
                </button> 
              <button class="btn btn-info btn-sm">
                   
+                  <label style="margin:0px"> 
+                    All &nbsp;<input style="margin:0px" type="radio" name="checky" value="" checked="checked"> 
+                  </label> &nbsp;
                   <label style="margin:0px"> 
                     Unchecked only &nbsp;<input style="margin:0px" type="radio" name="checky" value="unchecked_only"> 
                   </label> &nbsp;
@@ -90,7 +136,8 @@
                           <button data-id='<?php echo $value->id; ?>' type="button"
                           data-payload='<?php echo json_encode(['id' => $value->id, 'account_name' => $value->account_name, 'webpage_link' => $value->webpage_link, 'landing_page_link' => $value->landing_page_link, 'keywords' => $value->keywords, 'notes' => $value->notes], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE)?>'
                           class="edit-row btn btn-info btn-xs"><i class="fa fa-pencil"></i></button> 
-                          <button type="button" data-id='<?php echo $value->id; ?>' class="btn btn-delete btn-danger btn-xs"><i class="fa fa-trash-o"></i></button> <button class="btn btn-info btn-xs" style="border-radius: 500px;margin-top:7px">&nbsp;<i class="fa fa-info" title="<?php echo ucwords($value->status) ?>">&nbsp;</i></button>
+                          <button type="button" data-id='<?php echo $value->id; ?>' class="btn btn-delete btn-danger btn-xs"><i class="fa fa-trash-o"></i></button> 
+                          <button data-placement="top" data-toggle="tooltip" data-original-title="<?php echo ucwords($value->status) ?>" class="tooltips btn btn-info btn-xs" style="border-radius: 500px;">&nbsp;<i class="fa fa-info">&nbsp;</i></button>
                           </td>
                         </tr>
                       <?php endforeach; ?>
@@ -161,7 +208,11 @@
 <?php $this->load->view('cms/footer_importer') ?>
 <!--main content end-->
 
-
+<!-- <script>
+  $(document).ready(function($) {
+    $('.sidebar-toggle-box').click();
+  });
+</script> -->
   <script src="<?php echo base_url('public/admin/js/custom/') ?>link_checking_management.js"></script>
   <script src="<?php echo base_url('public/admin/js/custom/') ?>link_builds_management.js"></script>
   <script src="<?php echo base_url('public/admin/js/custom/') ?>generic.js"></script>

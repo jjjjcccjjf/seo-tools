@@ -16,7 +16,8 @@
             <span class="username">Welcome back, <?php echo $this->session->userdata('name'); ?></span>
             <b class="caret"></b>
           </a>
-          <ul class="dropdown-menu extended logout">
+          <ul class="dropdown-menu extended ">
+            <li><a href="<?php echo base_url('cms/profile') ?>"><i class="fa fa-pencil"></i> Edit Profile</a></li>
             <li><a href="<?php echo base_url('cms/login/logout') ?>"><i class="fa fa-key"></i> Log Out</a></li>
           </ul>
         </li>
