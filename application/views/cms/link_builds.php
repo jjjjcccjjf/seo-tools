@@ -65,7 +65,7 @@
                               <small class="text-muted">
                                 <span style='color:green'>Successful links: <?php echo @$status_count['success'] ?></span> — 
                                 <span style='color:red'>Failed: <?php echo @$status_count['failed'] ?></span> — 
-                                <span style='color:#f1c500'>Failed: <?php echo @$status_count['pending'] ?></span> 
+                                <span style='color:#f1c500'>Pending: <?php echo @$status_count['pending'] ?></span> 
                               </small>
                           </div>
                           <!-- <div class="item text-center">
@@ -98,7 +98,6 @@
                 <span class="hidy3">Redirecting...</span>
                </button> 
              <button class="btn btn-info btn-sm">
-                  
                   <label style="margin:0px"> 
                     All &nbsp;<input style="margin:0px" type="radio" name="checky" value="" checked="checked"> 
                   </label> &nbsp;
@@ -109,6 +108,15 @@
                     Failed only &nbsp;<input style="margin:0px" type="radio" name="checky" value="failed_only"> 
                   </label>
               </button>
+              <button class="btn btn-sm">
+                <select name="account_name">
+                  <option disabled selected="selected">Filter by Account Name</option>
+                  <?php foreach ($accounts as $value): ?>
+                    <option <?php echo ($value->account_name == $this->input->get('account_name')) ? 'selected="selected"': '' ?>><?php echo $value->account_name ?></option>
+                  <?php endforeach ?>
+                </select>
+              </button>
+              <a class="btn btn-warning btn-sm" href="<?php echo base_url('cms/link_builds')?>">Clear Filters</a>
             </p>
             <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="1">
               <table class="table table-bordered">
@@ -125,7 +133,11 @@
                 <tbody>
                   <?php if (count($res) > 0 ): ?>
 
-                    <?php $i = 1; foreach ($res as $key => $value): ?>
+                    <?php $i = 1; 
+                    if ($this->input->get('page') > 1) {
+                      $i = ($this->input->get('page') - 1) * 100;
+                    }
+                    foreach ($res as $key => $value): ?>
                       <tr class="<?php echo $value->status ?>">
                         <th scope="row"><?php echo $i++ ?></th>
                         <td><?php echo $value->account_name ?></td>
@@ -150,6 +162,46 @@
                     <?php endif; ?>
                   </tbody>
                 </table>
+
+              <!-- pagination -->
+              <style>
+              .active_lg {
+                background: lightgray !important
+              }
+              </style>
+              <ul class="pagination">
+                <ul class='pagination'>
+                  <?php $page = ($this->input->get('page')) ?: 1; ?>
+                  <li><a href="<?php echo base_url('cms/link_builds/') . "?page=1&" . @$filters;?>">&laquo;</a></li>
+
+                  <!-- loop for desc -->
+                  <?php for ($i = $page - 2; $i < ($page) ; $i++):
+                    if ($i == -1 || $i == 0) {
+                      continue;
+                    }
+                   ?>
+                  <li><a href="<?php echo base_url('cms/link_builds/') . "?page=" . $i . "&" . @$filters;?>"><?= $i ?></a></li>
+                  <?php endfor; ?>
+                  <!-- / loop for desc -->
+
+                  <li><a href="<?php echo base_url('cms/link_builds/') . "?page=" . $page . "&" . @$filters;?>"><?= $page ?></a></li>
+                  
+                  <!-- loop for asc -->
+                  <?php for ($i = $page + 1; $i < ($page + 3) ; $i++):
+                  if ($i == $total_pages + 1 || $i == $total_pages + 2) {
+                      continue;
+                  }
+                  ?>
+                  <li><a href="<?php echo base_url('cms/link_builds/') . "?page=" . $i . "&" . @$filters;?>"><?= $i ?></a></li>
+                  <?php endfor; ?>
+                  <!-- / loop for asc -->
+                   
+
+                <li><a href="<?php echo base_url('cms/link_builds/') . "?page=" . $total_pages . "&" . @$filters;?>">&raquo;</a></li>
+                </ul>
+              </ul>
+              <!-- pagination -->
+
               </div>
             </div>
           </section>
@@ -193,6 +245,7 @@
               <textarea class="form-control" name="notes" placeholder="Notes"></textarea>
             </div>
             <input type="hidden" name="user_id" value="<?php echo $this->session->id ?>">
+            <input type="hidden" name="page" value="<?php echo $this->input->get('page') ?>">
 
           </div>
           <div class="modal-footer">

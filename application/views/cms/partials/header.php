@@ -32,6 +32,7 @@
   <script src="<?php echo base_url('public/admin/'); ?>js/jquery.js"></script>
   <script type="text/javascript">
     const base_url = '<?php echo base_url(); ?>';
+    const page = '<?php echo $this->input->get("page"); ?>';
   </script>
 </head>
 

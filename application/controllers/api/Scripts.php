@@ -47,14 +47,32 @@ class Scripts extends \Restserver\Libraries\REST_Controller
   {
   	if ($options == 'unchecked_only') {
   		$this->db->where('status', null);
+  	  $links = $this->link_builds_model->allResApi($user_id);
+      
+      $this->db->where('status', null);
+      $collection = $this->link_builds_model->allResCollection($user_id);
       // $this->db->where('(status IS NULL OR status = "") AND verified_at is NULL');
+
   	} else if ($options == 'failed_only'){
-  		$this->db->where('status', 'failed');
-  	}
-  	$links = $this->link_builds_model->allRes($user_id);
-  	
+      $this->db->where('status', 'failed');
+      $links = $this->link_builds_model->allResApi($user_id);
+
+      $this->db->where('status', 'failed');
+      $collection = $this->link_builds_model->allResCollection($user_id);
+
+  	} else {
+      $links = $this->link_builds_model->allResApi($user_id);
+      $collection = $this->link_builds_model->allResCollection($user_id);
+    }
+
+    $pages_arr = []; 
+
     foreach ($links as $key => $value) {
-      $auditRes = $this->scripts_model->auditHtml($this->scripts_model->getPageObj($value->webpage_link)->html, $value->landing_page_link);
+      $pages_arr[$value->webpage_link] = $this->scripts_model->getPageObj($value->webpage_link)->html; 
+  	}
+
+    foreach ($collection as $key => $value) {
+      $auditRes = $this->scripts_model->auditHtml($pages_arr[$value->webpage_link], $value->landing_page_link);
       $this->db->where('id', $value->id);
       $this->db->update('link_builds', ['status' => $auditRes, 'verified_at' => date('Y-m-d H:i:s')]);
     }

@@ -45,6 +45,10 @@ $(document).ready(function() {
       }
   
     })
+
+    $('select[name=account_name]').on('change', function(){
+      window.location.href = window.location.href.split('?')[0] + "?account_name=" + $(this).val()
+    })
  
   
   })

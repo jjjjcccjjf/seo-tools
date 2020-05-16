@@ -9,15 +9,22 @@ class Link_builds extends Admin_core_controller { # see application/core/MY_Cont
 
   public function index()
   {
+    $this->db->order_by('created_at', 'desc');
     $res = $this->link_builds_model->allRes($this->session->id);
 
     $data['status_count'] = $this->link_builds_model->getStatusCount($this->session->id);
     $data['res'] = $res;
+    $data['total_pages'] = $this->link_builds_model->getTotalPages();
+    $data['accounts'] = $this->link_builds_model->getUniqueAccountsPerUser($this->session->id);
     $this->wrapper('cms/link_builds', $data);
   }
  
   public function update($id)
   {
+    $last_page = $_POST['page']; 
+    unset($_POST['page']);
+    $page_str = "?page={$last_page}";
+
     $data = $this->input->post();
     $data['status'] = null;
     // var_dump( $id, $data); die();
@@ -26,10 +33,11 @@ class Link_builds extends Admin_core_controller { # see application/core/MY_Cont
     } else {
       $this->session->set_flashdata('flash_msg', ['message' => 'Error updating item', 'color' => 'red']);
     }
-    redirect('cms/link_builds');
+    redirect('cms/link_builds/' . $page_str);
   }
   public function add()
   {
+    unset($_POST['page']);
     if($this->link_builds_model->add($this->input->post())){
       $this->session->set_flashdata('flash_msg', ['message' => 'Item added successfully', 'color' => 'green']);
     } else {

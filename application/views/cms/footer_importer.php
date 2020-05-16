@@ -17,7 +17,8 @@
     border-bottom-left-radius: 0; margin-left:-4px
   }
 </style>
-
+<br>  
+<br>  
 <footer class="site-footer" style="position: fixed;
   left: 0;
   bottom: 0; width:100%">
