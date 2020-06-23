@@ -46,6 +46,13 @@
             <span>Users Management</span>
           </a>
         </li>
+        <li>
+          <a href="<?php echo base_url('cms/link-builder-tool-admin') ?>"
+            class="<?php echo $this->uri->segment(2) === 'link-builder-tool-admin' ? 'active': ''; ?>">
+            <i class="fa fa-wrench"></i>
+            <span>Link Builder Tool Admin</span>
+          </a>
+        </li>
 
         <?php endif ?>
 
@@ -57,7 +64,6 @@
             <span>My Link Builds</span>
           </a>
         </li>
-        <?php endif ?>
         <li>
           <a href="<?php echo base_url('cms/link-builder-tool') ?>"
             class="<?php echo $this->uri->segment(2) === 'link-builder-tool' ? 'active': ''; ?>">
@@ -65,6 +71,7 @@
             <span>Link Builder Tool</span>
           </a>
         </li>
+        <?php endif ?>
 
         <!-- <li class="sub-menu">
           <a href="javascript:;" class="<?php echo (in_array($this->uri->segment(2), ['link-builder-tool']))  ? 'active': ''; ?>">

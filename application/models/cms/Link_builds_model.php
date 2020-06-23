@@ -15,9 +15,12 @@ class Link_builds_model extends Admin_core_model
     $this->load->model('api/scripts_model');
   }
 
-  public function getTotalPages()
+  public function getTotalPages2($user_id)
   {
-    $this->db->where('user_id', $this->session->id);
+
+    if ($user_id) {
+      $this->db->where('user_id', $user_id);
+    }
     if ($this->input->get('account_name')) {
       $this->db->where('account_name', $this->input->get('account_name'));
     }
@@ -26,9 +29,11 @@ class Link_builds_model extends Admin_core_model
 
   public function getUniqueAccountsPerUser($user_id)
   { 
+    if ($user_id) {
+        $this->db->where('user_id', $user_id);
+    }
     $this->db->distinct();
     $this->db->select('account_name');
-    $this->db->where('user_id', $user_id);
     return $this->db->get($this->table)->result();
   }
 
@@ -40,11 +45,15 @@ class Link_builds_model extends Admin_core_model
 
   function allRes($user_id)
   {
-    if ($this->input->get('account_name')) {
-      $this->db->where('account_name', $this->input->get('account_name'));
-    }
     $this->paginate();
-  	$this->db->where('user_id', $user_id);
+    if ($this->input->get('account_name')) {
+      $this->db->where('link_builds.account_name', $this->input->get('account_name'));
+    }
+    if ($user_id) {
+  	   $this->db->where('link_builds.user_id', $user_id);
+    }
+    $this->db->select('link_builds.id, link_builds.account_name, link_builds.webpage_link, link_builds.landing_page_link, link_builds.status, link_builds.keywords, link_builds.notes, link_builds.created_at, link_builds.verified_at, link_builds.updated_at, users.name as owner');
+    $this->db->join('users', 'link_builds.user_id = users.id', 'left');
   	$res = $this->db->get('link_builds')->result();
     return $this->formatRes($res);
   }
