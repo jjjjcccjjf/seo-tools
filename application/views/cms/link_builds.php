@@ -8,6 +8,9 @@
   .pending{
     background: rgba(233,212,96,0.15);
   }
+  .partial{
+    background: rgba(255,165,0,0.55);
+  }
   .legend-btn{
     width:30px;
     margin:0px 3px 0px 3px;
@@ -65,6 +68,7 @@
                               <small class="text-muted">
                                 <span style='color:green'>Successful links: <?php echo @$status_count['success'] ?></span> — 
                                 <span style='color:red'>Failed: <?php echo @$status_count['failed'] ?></span> — 
+                                <span style='color:orange'>Partial: <?php echo @$status_count['partial'] ?></span> — 
                                 <span style='color:#f1c500'>Pending: <?php echo @$status_count['pending'] ?></span> 
                               </small>
                           </div>
@@ -127,6 +131,7 @@
                     <th>Webpage</th>
                     <th>Landing Page</th>
                     <th>Keywords</th>
+                    <th>Strategies</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -144,9 +149,10 @@
                         <td><a target="_blank" href="<?php echo $value->webpage_link ?>"><?php echo $value->webpage_link ?></a></td>
                         <td><a target="_blank" href="<?php echo $value->landing_page_link ?>"><?php echo $value->landing_page_link ?></a></td>
                         <td><?php echo $value->keywords ?></td>
+                        <td><?php echo $value->strategies ?></td>
                         <td>
                           <button data-id='<?php echo $value->id; ?>' type="button"
-                          data-payload='<?php echo json_encode(['id' => $value->id, 'account_name' => $value->account_name, 'webpage_link' => $value->webpage_link, 'landing_page_link' => $value->landing_page_link, 'keywords' => $value->keywords, 'notes' => $value->notes], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE)?>'
+                          data-payload='<?php echo json_encode(['id' => $value->id, 'account_name' => $value->account_name, 'webpage_link' => $value->webpage_link, 'landing_page_link' => $value->landing_page_link, 'keywords' => $value->keywords, 'strategies' => $value->strategies, 'notes' => $value->notes], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE)?>'
                           class="edit-row btn btn-info btn-xs"><i class="fa fa-pencil"></i></button> 
                           <button type="button" data-id='<?php echo $value->id; ?>' class="btn btn-delete btn-danger btn-xs"><i class="fa fa-trash-o"></i></button> 
                           <button data-placement="top" data-toggle="tooltip" data-original-title="<?php echo ucwords($value->status) ?>" class="tooltips btn btn-info btn-xs" style="border-radius: 500px;">&nbsp;<i class="fa fa-info">&nbsp;</i></button>
@@ -157,7 +163,7 @@
 
                     <?php else: ?>
                       <tr>
-                        <td colspan="6" style="text-align:center">Empty table data</td>
+                        <td colspan="7" style="text-align:center">Empty table data</td>
                       </tr>
                     <?php endif; ?>
                   </tbody>
@@ -232,12 +238,17 @@
             </div>
             <div class="form-group">
               <label >Landing Page Link</label>
-              <input type="url" class="form-control" name="landing_page_link" placeholder="Landing page link">
+              <input type="text" class="form-control" name="landing_page_link" placeholder="Landing page link">
             </div>
 
             <div class="form-group">
               <label >Keywords</label>
               <input type="text" class="form-control" name="keywords" placeholder="Keywords">
+            </div>
+
+            <div class="form-group">
+              <label >Strategies</label>
+              <input type="text" class="form-control" name="strategies" placeholder="Strategies">
             </div>
 
             <div class="form-group">

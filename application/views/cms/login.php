@@ -88,6 +88,12 @@ if (!$admin_mess && !$lb_mess) {
                           Admin
                       </a>
                   </li> 
+                  <li class="">
+                      <a data-toggle="tab" href="#forgot">
+                          <i class="fa fa-key"></i>
+                          Forgot Password
+                      </a>
+                  </li> 
               </ul>
           </header>
           <div class="panel-body">
@@ -118,6 +124,25 @@ if (!$admin_mess && !$lb_mess) {
                           <?php endif; ?>
                           <button style="background: dimgray; box-shadow: 0px 4px #908f8f"
                           class="btn btn-lg btn-login btn-block" type="submit">Admin Sign in</button>
+                        </form>
+                  <!-- ADMIN LOGIN -->
+                 </div>
+                <div id="forgot" class="tab-pane">
+
+                  <!-- ADMIN LOGIN -->
+                       <form class="form-signin" method="post" action="<?php echo base_url('cms/login/forgot_password') ?>" style="margin-top:0px">
+                          <input type="text" name="email" class="form-control" placeholder="Email" autofocus required>
+                          <p style="color: grey; font-size: 15px;">
+                            I am a 
+                            <label>
+                              <input type="radio" name="type" value="admin" required> Administrator
+                            </label>
+                            <label>
+                              <input type="radio" name="type" value="users" required> Link Builder
+                            </label>
+                          </p>
+                          <button style="background: dimgray; box-shadow: 0px 4px #908f8f"
+                          class="btn btn-lg btn-login btn-block" type="submit">Reset Password</button>
                         </form>
                   <!-- ADMIN LOGIN -->
                  </div>

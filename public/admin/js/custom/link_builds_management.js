@@ -9,12 +9,14 @@ $(document).ready(function() {
       $('input[name=webpage_link]').removeAttr('required')
       $('input[name=landing_page_link]').removeAttr('required')
       $('input[name=keywords]').removeAttr('required')
+      $('input[name=strategies]').removeAttr('required')
       $('textarea[name=notes]').removeAttr('required')
   
       $('input[name=account_name]').val(payload.account_name)
       $('input[name=webpage_link]').val(payload.webpage_link)
       $('input[name=landing_page_link]').val(payload.landing_page_link)
       $('input[name=keywords]').val(payload.keywords)
+      $('input[name=strategies]').val(payload.strategies)
       $('textarea[name=notes]').val(payload.notes)
 
       $('form').attr('action', base_url + 'cms/link_builds/update/' + $(this).data('id'))

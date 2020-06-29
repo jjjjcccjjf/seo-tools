@@ -22,4 +22,28 @@ class Welcome extends CI_Controller {
 	{
 		redirect('cms/dashboard');
 	}
+
+	function reset_password($hash)
+	{
+		$hashy = base64_decode($hash);
+		$harr = explode(':', $hashy);
+		$data['email'] =  $harr[0];
+		$data['type'] =  $harr[1];
+
+		$this->load->view('cms/reset_password', $data);
+	}
+
+	function change_password()
+	{
+		$new_pass = password_hash($this->input->post('password'), PASSWORD_DEFAULT);
+		$res = $this->db->update($this->input->post('type'), ['password' => $new_pass]);
+
+	   if($res){
+	      $this->session->set_flashdata('login_msg_lb', ['message' => 'Password was reset successfully', 'color' => 'green']);
+	      redirect('cms/login');
+	    } else {
+	      $this->session->set_flashdata('login_msg_lb', ['message' => 'Failed updating password', 'color' => 'red']);
+	      redirect('cms/login');
+	    }
+	}
 }

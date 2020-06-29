@@ -81,6 +81,7 @@ class Dashboard extends Admin_core_controller {
 
     $data['success_arr'] = $this->link_builds_model->getSeries($user_id, 'success');
     $data['failed_arr'] = $this->link_builds_model->getSeries($user_id, 'failed');
+    $data['partial_arr'] = $this->link_builds_model->getSeries($user_id, 'partial');
     $data['pending_arr'] = $this->link_builds_model->getSeries($user_id, '');
 
     // var_dump($data); die();

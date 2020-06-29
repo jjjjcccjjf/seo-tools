@@ -61,5 +61,21 @@ class Login extends Admin_core_controller {
 
   }
 
+  public function forgot_password() 
+  {
+    $email = $this->input->post('email');
+    $type = $this->input->post('type');
+    $res = $this->login->forgotPassword($email, $type);
+
+    if($res){
+      $this->session->set_flashdata('login_msg_lb', ['message' => 'Password reset link was sent to ' . $email, 'color' => 'green']);
+      redirect('cms/login');
+    } else {
+      $this->session->set_flashdata('login_msg_lb', ['message' => 'Sorry, ' . $this->input->post('email') . ' doesn\'t exist in ' . $this->input->post('type'), 'color' => 'red']);
+      redirect('cms/login');
+    }
+
+  }
+
 
 }

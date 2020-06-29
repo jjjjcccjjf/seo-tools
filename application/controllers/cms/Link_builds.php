@@ -14,7 +14,7 @@ class Link_builds extends Admin_core_controller { # see application/core/MY_Cont
 
     $data['status_count'] = $this->link_builds_model->getStatusCount($this->session->id);
     $data['res'] = $res;
-    $data['total_pages'] = $this->link_builds_model->getTotalPages();
+    $data['total_pages'] = $this->link_builds_model->getTotalPages2($this->session->id);
     $data['accounts'] = $this->link_builds_model->getUniqueAccountsPerUser($this->session->id);
     $this->wrapper('cms/link_builds', $data);
   }
@@ -162,7 +162,8 @@ class Link_builds extends Admin_core_controller { # see application/core/MY_Cont
             $lb_row->webpage_link == $data[2] && 
             $lb_row->landing_page_link == $data[3] &&
             $lb_row->keywords == $data[4] &&
-            $lb_row->notes == $data[5]
+            $lb_row->strategies == $data[5] &&
+            $lb_row->notes == $data[6]
           ) {
             continue;
           }
@@ -174,7 +175,8 @@ class Link_builds extends Admin_core_controller { # see application/core/MY_Cont
             'webpage_link' => $data[2],
             'landing_page_link' => $data[3],
             'keywords' => $data[4],
-            'notes' => $data[5],
+            'strategies' => $data[5],
+            'notes' => $data[6],
             'status' => null,
             'verified_at' => null
           ]);
@@ -200,10 +202,10 @@ class Link_builds extends Admin_core_controller { # see application/core/MY_Cont
     header('Last-Modified: ' . date('D M j G:i:s T Y'));
     $outss = fopen("php://output", "w");
 
-    fputcsv($outss, ['id', 'account_name', 'webpage_link', 'landing_page_link', 'keywords', 'notes']);
+    fputcsv($outss, ['id', 'account_name', 'webpage_link', 'landing_page_link', 'keywords', 'strategies', 'notes']);
     foreach ($res as $value) {
         fputcsv($outss, 
-          [$value->id, $value->account_name, $value->webpage_link, $value->landing_page_link, $value->keywords, $value->notes]
+          [$value->id, $value->account_name, $value->webpage_link, $value->landing_page_link, $value->keywords, $value->strategies, $value->notes]
         );
     }
     fclose($outss);

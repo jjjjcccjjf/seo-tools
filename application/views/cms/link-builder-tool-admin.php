@@ -8,6 +8,9 @@
   .pending{
     background: rgba(233,212,96,0.15);
   }
+  .partial{
+    background: rgba(255,165,0,0.55);
+  }
   .legend-btn{
     width:30px;
     margin:0px 3px 0px 3px;
@@ -25,12 +28,22 @@
     display:none;
   }
 	th,td {text-align:center;}
+  #sidebar { display:none; }
+  .sidebar-toggle-box{ visibility:hidden; }
 </style>
 <!--main content start-->
-<section id="main-content">
+<section id="">
+<!-- <section id="main-content"> -->
   <section class="wrapper site-min-height">
     <!-- page start-->
 		  <div class="col-lg-12">
+      <!--breadcrumbs start -->
+      <ul class="breadcrumb">
+          <li><a href="<?php echo base_url('cms') ?>"><i class="fa fa-dashboard"></i> Admin Management</a></li>
+          <li><a href="<?php echo base_url('cms/users') ?>"><i class="fa fa-users"></i> Users Management</a></li>
+          <li><a href="<?php echo base_url('cms/link-builder-tool-admin')?>"><i class="fa fa-wrench"></i> Link Builder Tool Admin</a></li>
+      </ul>
+      <!--breadcrumbs end -->
 		  	<section class="panel">
 		          <header class="panel-heading">
 		          	<div class="row">
@@ -90,6 +103,8 @@
                                   <th>Owner</th>
                                   <th>Webpage Link</th>
                                   <th>Landing Page</th>
+                                  <th>Keywords</th>
+                                  <th>Strategies</th>
                               </tr>
                               </thead>
                               <tbody>
@@ -106,6 +121,8 @@
                                   <th scope="row"><?php echo $value->owner ?></th>
                                   <td><a target="_blank" href="<?php echo $value->webpage_link ?>"><?php echo $value->webpage_link ?></a></td>
                                   <td><a target="_blank" href="<?php echo $value->landing_page_link ?>"><?php echo $value->landing_page_link ?></a></td>
+                                  <td><?php echo $value->keywords ?></td>
+                                  <td><?php echo $value->strategies ?></td>
                                 </tr>
                                 <?php endforeach; ?>
 
@@ -237,7 +254,7 @@ Highcharts.chart('containerss', {
             borderWidth: 0
         }
     },
-    colors: ['rgba(0,255,0,0.55)', 'rgba(255,0,0,0.55)', 'rgba(233,212,96,0.55)'],
+    colors: ['rgba(0,255,0,0.55)', 'rgba(255,0,0,0.55)', 'rgba(255,165,0,0.55)', 'rgba(233,212,96,0.55)'],
     series: [{
         name: 'Success',
         data: [<?php 
@@ -253,6 +270,14 @@ Highcharts.chart('containerss', {
             foreach ($failed_arr as $value) {
               $failed_str .= "$value,";
             } echo rtrim($failed_str, ','); ?>]
+
+    }, {
+        name: 'Partial',
+        data: [<?php 
+            $partial_str = '';
+            foreach ($partial_arr as $value) {
+              $partial_str .= "$value,";
+            } echo rtrim($partial_str, ','); ?>]
 
     }, {
         name: 'Pending',

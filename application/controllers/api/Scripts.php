@@ -36,7 +36,7 @@ class Scripts extends \Restserver\Libraries\REST_Controller
   		break;
   		
   		default:
-  		case 'fail':
+  		case 'failed':
   		$this->response(['code' => 'fail', 'message' => 'Fail'], 200);
   		break;
   	}

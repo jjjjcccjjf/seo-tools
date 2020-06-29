@@ -6,7 +6,18 @@
       <i class="fa fa-bars"></i>
     </div>
     <!--logo start-->
-    <a href="<?php echo base_url() ?>" class="logo" >OPTIMIND<span>SEO</span></a>
+    <a href="<?php 
+    switch($this->session->role) {
+      case 'administrator':
+      echo base_url();
+      break;
+
+      case 'link_builder':
+      echo base_url('cms/link_builds');
+      break;
+    }
+    ?>" class="logo" >OPTIMIND<span>SEO</span></a>
+    
     <!--logo end-->
     <div class="top-nav ">
       <ul class="nav pull-right top-menu">

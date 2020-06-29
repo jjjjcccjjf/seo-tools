@@ -25,12 +25,22 @@
     display:none;
   }
 	th,td {text-align:center;}
+  #sidebar { display:none; }
+  .sidebar-toggle-box{ visibility:hidden; }
 </style>
 <!--main content start-->
-<section id="main-content">
+<!-- <section id="main-content" >  -->
+<section id="" > 
   <section class="wrapper site-min-height">
     <!-- page start-->
+
 		  <div class="col-lg-12">
+      <!--breadcrumbs start -->
+      <ul class="breadcrumb">
+          <li><a href="<?php echo base_url('cms/link_builds') ?>"><i class="fa fa-link"></i> My Link Builds</a></li>
+          <li><a href="<?php echo base_url('cms/link-builder-tool')?>"><i class="fa fa-link"></i> Link Builder Tool</a></li>
+      </ul>
+      <!--breadcrumbs end -->
 		  	<section class="panel">
 		          <header class="panel-heading">
 		          	<div class="row">
@@ -80,6 +90,8 @@
                                   <th>Account name</th>
                                   <th>Webpage Link</th>
                                   <th>Landing Page</th>
+                                  <th>Keywords</th>
+                                  <th>Strategies</th>
                               </tr>
                               </thead>
                               <tbody>
@@ -95,13 +107,15 @@
                                   <td><?php echo $value->account_name ?></td>
                                   <td><a target="_blank" href="<?php echo $value->webpage_link ?>"><?php echo $value->webpage_link ?></a></td>
                                   <td><a target="_blank" href="<?php echo $value->landing_page_link ?>"><?php echo $value->landing_page_link ?></a></td>
+                                  <td><?php echo $value->keywords ?></td>
+                                  <td><?php echo $value->strategies ?></td>
                                 </tr>
                                 <?php endforeach; ?>
 
 
                               <?php else: ?>
                                 <tr>
-                                  <td colspan="4" style="text-align:center">Empty table data</td>
+                                  <td colspan="5" style="text-align:center">Empty table data</td>
                                 </tr>
                               <?php endif; ?>
 

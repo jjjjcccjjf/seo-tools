@@ -52,7 +52,7 @@ class Link_builds_model extends Admin_core_model
     if ($user_id) {
   	   $this->db->where('link_builds.user_id', $user_id);
     }
-    $this->db->select('link_builds.id, link_builds.account_name, link_builds.webpage_link, link_builds.landing_page_link, link_builds.status, link_builds.keywords, link_builds.notes, link_builds.created_at, link_builds.verified_at, link_builds.updated_at, users.name as owner');
+    $this->db->select('link_builds.id, link_builds.account_name, link_builds.webpage_link, link_builds.landing_page_link, link_builds.status, link_builds.keywords, link_builds.notes, link_builds.created_at, link_builds.verified_at, link_builds.updated_at, users.name as owner, link_builds.strategies');
     $this->db->join('users', 'link_builds.user_id = users.id', 'left');
   	$res = $this->db->get('link_builds')->result();
     return $this->formatRes($res);
@@ -85,6 +85,10 @@ class Link_builds_model extends Admin_core_model
     $this->db->where('user_id', $user_id);
     $this->db->where('status', 'failed');
     $res['failed'] = $this->db->count_all_results('link_builds');
+
+    $this->db->where('user_id', $user_id);
+    $this->db->where('status', 'partial');
+    $res['partial'] = $this->db->count_all_results('link_builds');
 
     $this->db->where('user_id', $user_id);
     $this->db->where('(status IS NULL OR status = "")');

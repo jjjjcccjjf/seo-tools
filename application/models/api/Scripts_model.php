@@ -44,6 +44,7 @@ class Scripts_model extends CI_model
 	@$DOM->loadHTML($html);
 	//get a list of all <A> tags
 	$a = $DOM->getElementsByTagName('a');
+	$dom = $DOM->saveHTML();
 
 	$links = [];
 	//loop through all <A> tags
@@ -51,16 +52,19 @@ class Scripts_model extends CI_model
 	    //echo out the href attribute of the <A> tag.
 	    $links[] = rtrim($link->getAttribute('href'), '/');
 	}
-	return $this->delegateLink($links, $link_to_be_verified);
+	return $this->delegateLink($links, $link_to_be_verified, $dom);
   }
 
-  function delegateLink($links, $link_to_be_verified)
+  function delegateLink($links, $link_to_be_verified, $dom)
   {
   	if (in_array(rtrim($link_to_be_verified, '/'), $links)) {
   		return 'success';
   	}
 
-  	if (!in_array($link_to_be_verified, $links)) {
+	if( strpos($dom, $link_to_be_verified ) !== false) {
+	    return 'partial';
+	}
+  	if (!in_array(rtrim($link_to_be_verified, '/'), $links)) {
   		return 'failed';
   	}
   }
