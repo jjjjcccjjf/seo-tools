@@ -28,7 +28,7 @@ class Welcome extends CI_Controller {
 		$hashy = base64_decode($hash);
 		$harr = explode(':', $hashy);
 		$data['email'] =  $harr[0];
-		$data['type'] =  $harr[1];
+		$data['type'] =  substr($harr[1], 0, 5);
 
 		$this->load->view('cms/reset_password', $data);
 	}

@@ -125,7 +125,8 @@ class Link_builds extends Admin_core_controller { # see application/core/MY_Cont
             'webpage_link' => $data[1],
             'landing_page_link' => $data[2],
             'keywords' => $data[3],
-            'notes' => $data[4],
+            'strategies' => $data[4],
+            'notes' => $data[5],
             'user_id' => $user_id
           ]);
           $records_added++;

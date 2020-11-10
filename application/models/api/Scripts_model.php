@@ -26,9 +26,10 @@ class Scripts_model extends CI_model
 	curl_setopt($c, CURLOPT_FOLLOWLOCATION, true);
 	//curl_setopt(... other options you want...)
 	$html = curl_exec($c);
-	if (curl_error($c))
-	    die(curl_error($c));
-
+	if (curl_error($c)) {
+		return (object)['status' => 200, 'html' => ''];
+	}
+	
 	// Get the status code
 	$status = curl_getinfo($c, CURLINFO_HTTP_CODE);
 	curl_close($c);
