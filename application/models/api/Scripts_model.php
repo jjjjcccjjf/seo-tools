@@ -25,11 +25,12 @@ class Scripts_model extends CI_model
 	curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($c, CURLOPT_FOLLOWLOCATION, true);
 	//curl_setopt(... other options you want...)
+	
 	$html = curl_exec($c);
 	if (curl_error($c)) {
 		return (object)['status' => 200, 'html' => ''];
 	}
-	
+
 	// Get the status code
 	$status = curl_getinfo($c, CURLINFO_HTTP_CODE);
 	curl_close($c);
@@ -42,7 +43,12 @@ class Scripts_model extends CI_model
   	$DOM = new DOMDocument();
 	// var_dump($DOM, $link_to_be_verified); die();
 	//load the html string into the DOMDocument
-	@$DOM->loadHTML($html);
+    //@$DOM->loadHTML($html);
+	
+	if (@$DOM->loadHTML($html) === false){
+	    return false;
+	}
+	
 	//get a list of all <A> tags
 	$a = $DOM->getElementsByTagName('a');
 	$dom = $DOM->saveHTML();

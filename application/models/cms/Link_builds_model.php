@@ -67,6 +67,7 @@ class Link_builds_model extends Admin_core_model
 
   function allResApi($user_id)
   {
+    #$this->db->limit(100);
     $this->db->distinct('webpage_link');
     $this->db->select('webpage_link');
     $this->db->where('user_id', $user_id);
